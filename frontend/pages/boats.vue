@@ -30,6 +30,10 @@
 
     </div>
 
+    <div v-if="ships.length == 0" >
+      <button @click="validateBoard">Validate</button>
+    </div>
+
   
   </template>
   
@@ -62,6 +66,9 @@
     },
     methods: {
 
+      validateBoard() {
+        console.log("TODO :: send transaction");
+      },
       desactivateAllShips() {
         for (let i = 0; i < this.ships.length; i++) {
           this.ships[i].activate = false;
