@@ -4,7 +4,11 @@
 
     <div class="main">
 
-        <Boats v-if="view === 'BOATS'" @change-view="changeViewToBattle" :userState="userState" />
+        <Boats 
+            v-if="view === 'BOATS'" 
+            @change-view="validateUserBoard" 
+            :userState="userState"
+        />
         <Battleship v-else-if="view === 'BATTLE'" :userState="userState" />
         <EndGame v-else-if="view === 'END'" :winner="winner" />
 
@@ -12,12 +16,17 @@
 </template>
 
 <script>
+import { ethers } from "ethers";
+import { FhenixClient, EncryptionTypes } from 'fhenixjs';
+import { BrowserProvider } from "ethers";
 
 import Header from '../components/Header.vue';
 
 import Boats from './boats.vue';
 import Battleship from './battleship.vue';
 import EndGame from './end_game.vue';
+
+import abi from '../../backend/contracts/battleship_abi.json';
 
 export default {
     components: {
@@ -28,6 +37,9 @@ export default {
     },
     data() {
         return {
+            contractAddress: "0x9416e17077f9044b0f80b225d988d1b1de039439",
+            contract: null,
+            fhenixClient: null,
             winner: null,
             view: "BOATS", // BATTLE // END // BOATS
             userState: Array.from({ length: 4 }, () => Array(4).fill(0)),
@@ -37,7 +49,47 @@ export default {
     methods: {
         changeViewToBattle() {
             this.view = "BATTLE";
+        },
+        async validateUserBoard() {
+
+            console.log("Validate the user dashboard.");
+
+            const flattenedList = this.userState.flat()
+            const flattenedString = flattenedList.join('');
+            const intValue = parseInt(flattenedString, 2);
+            const uint32Value = new Uint32Array([intValue])[0];
+
+            // TODO :: Send a tx 
+            console.log(uint32Value)
+
+            console.log("Here fhenix client")
+            console.log(this.fhenixClient)
+
+            const encryptedUserState = await this.fhenixClient.encrypt(uint32Value, EncryptionTypes.uint32);
+
+            console.log(encryptedUserState.data);
+
+            this.contract.placeShips(encryptedUserState.data).then(
+                () => {
+                    this.changeViewToBattle()
+                }
+            ).catch((err) => {
+                console.log("Error on transaction");
+                console.log(err);
+            })
+
         }
+    },
+    async created() {
+
+        // Get the provider & define the clent
+        const provider = new BrowserProvider(window.ethereum);
+        this.fhenixClient = new FhenixClient({provider});
+
+        // Get the signer & get the contract from the address
+        const signer = await provider.getSigner();
+        this.contract = new ethers.Contract(this.contractAddress, abi, signer);
+        
     }
 };
 </script>
