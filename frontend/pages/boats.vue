@@ -51,8 +51,8 @@
     ],
     data() {
       return {
-        width: 4, // 10, 
-        height: 4, // 10,
+        width: 5, // 10, 
+        height: 5, // 10,
         // userState: Array.from({ length: 11 }, () => Array(11).fill(0)),
         placedBoat: [],
         ships: [

@@ -42,8 +42,8 @@ export default {
             fhenixClient: null,
             winner: null,
             view: "BOATS", // BATTLE // END // BOATS
-            userState: Array.from({ length: 4 }, () => Array(4).fill(0)),
-            opponentState: Array.from({ length: 4 }, () => Array(4).fill(0)),
+            userState: Array.from({ length: 5 }, () => Array(5).fill(0)),
+            opponentState: Array.from({ length: 5 }, () => Array(5).fill(0)),
         };
     },
     methods: {
