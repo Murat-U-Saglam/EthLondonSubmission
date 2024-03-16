@@ -74,7 +74,7 @@ contract Battleship {
         }
 
         // Make sure the user created 6 ships
-        FHE.req(FHE.eq(shipCount, FHE.asEuint8(6)));
+        FHE.req(FHE.eq(shipCount, FHE.asEuint8(4)));
         console.log("BOBMA");
 
         if (msg.sender == player1) {
@@ -111,7 +111,7 @@ contract Battleship {
                 player1ShipsHit++;
                 emit Attack(_x, _y, player1, true);
             }
-            if (player1ShipsHit == 6 || player2ShipsHit == 6) {
+            if (player1ShipsHit == 4 || player2ShipsHit == 4) {
                 gameEnded = true;
                 winner = msg.sender;
                 emit GameEnded(msg.sender);
