@@ -15,7 +15,6 @@ artifacts
 typechain-types
 
 # files
-*.env
 *.log
 .DS_Store
 .pnp.*

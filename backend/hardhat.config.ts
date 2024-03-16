@@ -1,6 +1,6 @@
 // Plugins
 // Tasks
-import "./tasks";
+import "./utils/tasks";
 import "@nomicfoundation/hardhat-toolbox";
 import {config as dotenvConfig} from "dotenv";
 import "fhenix-hardhat-docker";
@@ -42,7 +42,7 @@ if (!keys) {
 const config: HardhatUserConfig = {
   solidity: "0.8.20",
   // Optional: defaultNetwork is already being set to "localfhenix" by fhenix-hardhat-plugin
-  defaultNetwork: "localfhenix",
+  defaultNetwork: "testnet",
   networks: {
     testnet: testnetConfig,
   },
@@ -53,3 +53,4 @@ const config: HardhatUserConfig = {
 };
 
 export default config;
+
