@@ -41,7 +41,7 @@ export default {
     },
     data() {
         return {
-            contractAddress: "0xb68c66bbe043a52b875de91585afea7df1e268e0",
+            contractAddress: "0xe30fF99c88689800A9af1117C833768c9054C50F",
             contract: null,
             fhenixClient: null,
             winner: null,
