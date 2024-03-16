@@ -69,13 +69,16 @@ export default {
   },
   methods: {
     async run_game() {
-      // if (
-      //   this.user_1 === "" ||
-      //   this.user_2 === ""
-      // ) { 
-      //   console.log("Check the parameter...")
-      //   return ; 
-      // }
+      if (
+        this.user_1 === "" ||
+        this.user_2 === ""
+      ) { 
+        console.log("Check the parameter...")
+        return ; 
+      }
+
+      console.log("Parameters: ", this.user_1, this.user_2)
+
       const provider = new BrowserProvider(window.ethereum);
       let signer = await provider.getSigner();
 
@@ -83,8 +86,8 @@ export default {
 
       // If your contract requires constructor args, you can specify them here
         let contract = await factory.deploy(
-          "0x2B8D536768163cBCd2cC5D91D4b03B913244A784", 
-          "0x7a47A0B8Fb2F1e56Db819e186B1A38e95B3c7d3B"
+          this.user_1, // "0x2B8D536768163cBCd2cC5D91D4b03B913244A784", 
+          this.user_2  // "0x7a47A0B8Fb2F1e56Db819e186B1A38e95B3c7d3B"
         );
 
         console.log("Contract:");
