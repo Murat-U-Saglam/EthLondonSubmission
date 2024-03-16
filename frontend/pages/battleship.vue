@@ -55,10 +55,10 @@
     props: ["userState"],
     data() {
       return {
-        width: 10, 
-        height: 10,
+        width: 5, 
+        height: 5,
         
-        opponentState: Array.from({ length: 11 }, () => Array(11).fill(0)),
+        opponentState: Array.from({ length: 5 }, () => Array(5).fill(0)),
 
         selectedX: null,
         selectedY: null
@@ -73,15 +73,7 @@
         // Already attacked
         if (this.opponentState[x][y]) { return; }
 
-        // Encrypt position
-        let x_encrypted = await encrypt(x);
-        let y_encrypted = await encrypt(y);
-
-        console.log(x_encrypted)
-        console.log(y_encrypted)
-
-        // TODO :: Send transaction 
-
+        this.$emit('attack-requets', x, y);
 
         // Update the front state
         this.opponentState[x][y] = 1;

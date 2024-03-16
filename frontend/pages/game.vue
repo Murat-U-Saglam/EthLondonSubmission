@@ -9,7 +9,11 @@
             @change-view="validateUserBoard" 
             :userState="userState"
         />
-        <Battleship v-else-if="view === 'BATTLE'" :userState="userState" />
+        <Battleship 
+            v-else-if="view === 'BATTLE'" 
+            :userState="userState" 
+            @attack-requets="attackRequest"    
+        />
         <EndGame v-else-if="view === 'END'" :winner="winner" />
 
     </div>
@@ -59,12 +63,6 @@ export default {
             const intValue = parseInt(flattenedString, 2);
             const uint32Value = new Uint32Array([intValue])[0];
 
-            // TODO :: Send a tx 
-            console.log(uint32Value)
-
-            console.log("Here fhenix client")
-            console.log(this.fhenixClient)
-
             const encryptedUserState = await this.fhenixClient.encrypt(uint32Value, EncryptionTypes.uint32);
 
             console.log(encryptedUserState.data);
@@ -77,7 +75,20 @@ export default {
                 console.log("Error on transaction");
                 console.log(err);
             })
+        },
+        async attackRequest(x, y) {
 
+            console.log("Attack on:", x, y)
+
+            const x_encrypted = await this.fhenixClient.encrypt(x, EncryptionTypes.uint8);
+            const y_encrypted = await this.fhenixClient.encrypt(y, EncryptionTypes.uint8);
+
+            this.contract.attack(x_encrypted, y_encrypted)
+                .then()
+                .catch((err) => {
+                console.log("Error on transaction");
+                console.log(err);
+            })
         }
     },
     async created() {
