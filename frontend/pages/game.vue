@@ -1,4 +1,7 @@
 <template>
+
+    <Header />
+
     <div class="main">
 
         <Boats v-if="view === 'BOATS'" @change-view="changeViewToBattle" :userState="userState" />
@@ -9,11 +12,14 @@
 
 <script>
 
+import Header from '../components/Header.vue';
+
 import Boats from './boats.vue';
 import Battleship from './battleship.vue';
 
 export default {
     components: {
+        Header,
         Boats,
         Battleship
     },
