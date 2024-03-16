@@ -30,8 +30,8 @@ export default {
         return {
             winner: null,
             view: "BOATS", // BATTLE // END // BOATS
-            userState: Array.from({ length: 11 }, () => Array(11).fill(0)),
-            opponentState: Array.from({ length: 11 }, () => Array(11).fill(0)),
+            userState: Array.from({ length: 4 }, () => Array(4).fill(0)),
+            opponentState: Array.from({ length: 4 }, () => Array(4).fill(0)),
         };
     },
     methods: {

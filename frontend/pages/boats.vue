@@ -49,16 +49,16 @@
     props: ['userState'],
     data() {
       return {
-        width: 10, 
-        height: 10,
+        width: 4, // 10, 
+        height: 4, // 10,
         // userState: Array.from({ length: 11 }, () => Array(11).fill(0)),
         placedBoat: [],
         ships: [
           { x: -1, y: -1, direction: false, activate: false, size: 2 },
-          { x: -1, y: -1, direction: true, activate: false, size: 3 },
-          { x: -1, y: -1, direction: false, activate: false, size: 3 },
-          { x: -1, y: -1, direction: false, activate: false, size: 4 },
-          { x: -1, y: -1, direction: false, activate: false, size: 5 }
+          // { x: -1, y: -1, direction: true, activate: false, size: 3 },
+          // { x: -1, y: -1, direction: false, activate: false, size: 3 },
+          // { x: -1, y: -1, direction: false, activate: false, size: 4 },
+          // { x: -1, y: -1, direction: false, activate: false, size: 5 }
         ],
         selectedX: null,
         selectedY: null,
@@ -70,8 +70,18 @@
       validateBoard() {
         console.log("TODO :: send transaction");
 
+        const flattenedList = this.userState.flat()
+        console.log(flattenedList)
+
+        const flattenedString = flattenedList.join('');
+        console.log(flattenedString)
+        
+        // TODO :: Send a tx 
+
+        // 0000000000000000010000001001000000100100000010011100001001000000100100000010010000001001000000000000
+
         // If all OK - change the view
-        this.$emit('change-view');
+        // this.$emit('change-view');
       },
       desactivateAllShips() {
         for (let i = 0; i < this.ships.length; i++) {

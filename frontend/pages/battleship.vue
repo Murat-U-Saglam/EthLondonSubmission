@@ -40,6 +40,10 @@
   
   <script>
 
+  const { address } = useChain();
+  const { encrypt, encryptedText } = useFHE();
+
+
   // import { ref } from 'vue';
   // const { navigateToPage } = useCommon();
   
@@ -64,10 +68,17 @@
       hasShip(state, x, y) {
         return state[x][y];
       },
-      attack(x, y) {
+      async attack(x, y) {
 
         // Already attacked
         if (this.opponentState[x][y]) { return; }
+
+        // Encrypt position
+        let x_encrypted = await encrypt(x);
+        let y_encrypted = await encrypt(y);
+
+        console.log(x_encrypted)
+        console.log(y_encrypted)
 
         // TODO :: Send transaction 
 
