@@ -80,10 +80,7 @@ export default {
 
             console.log("Attack on:", x, y)
 
-            const x_encrypted = await this.fhenixClient.encrypt(x, EncryptionTypes.uint8);
-            const y_encrypted = await this.fhenixClient.encrypt(y, EncryptionTypes.uint8);
-
-            this.contract.attack(x_encrypted, y_encrypted)
+            this.contract.attack(x, y)
                 .then()
                 .catch((err) => {
                 console.log("Error on transaction");
