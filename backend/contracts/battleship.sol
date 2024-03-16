@@ -2,7 +2,7 @@
 pragma solidity >=0.8.13 <0.9.0;
 
 import "@fhenixprotocol/contracts/FHE.sol";
-import "@fhenixprotocol/contracts/access/Permission.sol";
+import "hardhat/console.sol";
 
 contract Battleship {
     address public player1;
@@ -14,15 +14,15 @@ contract Battleship {
     bool public player1Ready;
     bool public player2Ready;
 
-    uint8 public constant BOARD_SIZE = 4; // max size is 5
+    uint8 public constant BOARD_SIZE = 5; 
     uint8 public player1ShipsHit;
     uint8 public player2ShipsHit;
 
     // 0 = empty
     // 1 = ship
     // 2 = attacked
-    euint32[4][4] public player1Board;
-    euint32[4][4] public player2Board;
+    euint8[BOARD_SIZE][BOARD_SIZE] public player1Board;
+    euint8[BOARD_SIZE][BOARD_SIZE] public player2Board;
 
     event Attack(uint8 x, uint8 y, address victim, bool hit);
     event GameEnded(address winner);
@@ -58,25 +58,24 @@ contract Battleship {
         // 0 1 0 0
 
         euint32 packedData = FHE.asEuint32(encryptedValue);
-        euint32[BOARD_SIZE][BOARD_SIZE] storage board;
-        if(msg.sender == player1  ){
+        euint8[BOARD_SIZE][BOARD_SIZE] storage board;
+        if(msg.sender == player1 ){
             board = player1Board;
         } else {
             board = player2Board;
         }
-        euint32 mask = FHE.asEuint32(1);
-        euint32 shipCount = FHE.asEuint32(0);
-
+        euint8 shipCount = FHE.asEuint8(0); 
+        euint32 boardMask = FHE.asEuint32(1);
         for (uint256 i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
-          euint32 value = FHE.and(packedData, mask);
+          euint8 value = FHE.asEuint8(FHE.and(packedData, boardMask));
           board[i / BOARD_SIZE][i % BOARD_SIZE] = value;
           shipCount = FHE.add(shipCount, value);
-        
-          packedData = FHE.shr(packedData, FHE.asEuint32(1));
+          packedData = FHE.shr(packedData, boardMask);
         }
 
         // Make sure the user created 6 ships
-        FHE.req(FHE.eq(shipCount, FHE.asEuint32(6)));
+        FHE.req(FHE.eq(shipCount, FHE.asEuint8(6)));
+        console.log("BOBMA");
 
         if (msg.sender == player1) {
             player1Ready = true;
@@ -94,14 +93,14 @@ contract Battleship {
         require(!gameEnded, "Game has ended");
         require(msg.sender == currentPlayer, "Not your turn");
 
-        euint32[4][4] storage targetBoard;
+        euint8[BOARD_SIZE][BOARD_SIZE] storage targetBoard;
         if (msg.sender == player1) {
             targetBoard = player2Board;
         } else {
             targetBoard = player1Board;
         }
 
-        uint32 target = FHE.decrypt(targetBoard[_x][_y]);
+        uint8 target = FHE.decrypt(targetBoard[_x][_y]);
         require(target < 2, "Already attacked this cell");
 
         if (target == 1) {
@@ -124,7 +123,7 @@ contract Battleship {
                 emit Attack(_x, _y, player1, false);
             }
         }
-        targetBoard[_x][_y] = FHE.asEuint32(2);
+        targetBoard[_x][_y] = FHE.asEuint8(2);
 
         if (currentPlayer == player1) {
             currentPlayer = player2;
