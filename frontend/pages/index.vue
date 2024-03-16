@@ -63,8 +63,8 @@ export default {
   data() {
     return {
       contractAddress: null,
-      user_1: "",
-      user_2: "",
+      user_1: "0x2B8D536768163cBCd2cC5D91D4b03B913244A784",
+      user_2: "0x7a47A0B8Fb2F1e56Db819e186B1A38e95B3c7d3B",
     };
   },
   methods: {

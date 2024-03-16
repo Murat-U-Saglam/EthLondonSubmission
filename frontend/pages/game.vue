@@ -4,6 +4,19 @@
 
     <div class="main">
 
+
+        <div 
+            v-if="view === 'INIT'" >
+
+            <input v-model="contractAddress">
+
+            <button @click="initialize">
+                Initialize
+            </button>
+
+        </div>
+
+
         <Boats 
             v-if="view === 'BOATS'" 
             @change-view="validateUserBoard" 
@@ -41,16 +54,29 @@ export default {
     },
     data() {
         return {
-            contractAddress: "0x8f1183a777B8e955993B193137b6850f0807b99F",
+            contractAddress: null,
             contract: null,
             fhenixClient: null,
             winner: null,
-            view: "BOATS", // BATTLE // END // BOATS
+            view: "INIT", // BATTLE // END // BOATS
             userState: Array.from({ length: 5 }, () => Array(5).fill(0)),
             opponentState: Array.from({ length: 5 }, () => Array(5).fill(0)),
         };
     },
     methods: {
+        async initialize() {
+            if (this.contractAddress === null) { return ; }
+            this.view = "BOATS";
+
+            // Get the provider & define the clent
+            const provider = new BrowserProvider(window.ethereum);
+            this.fhenixClient = new FhenixClient({provider});
+
+            // Get the signer & get the contract from the address
+            const signer = await provider.getSigner();
+            this.contract = new ethers.Contract(this.contractAddress, abi, signer);
+            
+        },
         changeViewToBattle() {
             this.view = "BATTLE";
         },
@@ -88,16 +114,5 @@ export default {
             })
         }
     },
-    async created() {
-
-        // Get the provider & define the clent
-        const provider = new BrowserProvider(window.ethereum);
-        this.fhenixClient = new FhenixClient({provider});
-
-        // Get the signer & get the contract from the address
-        const signer = await provider.getSigner();
-        this.contract = new ethers.Contract(this.contractAddress, abi, signer);
-        
-    }
 };
 </script>
