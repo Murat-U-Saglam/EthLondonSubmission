@@ -1,18 +1,44 @@
 <template>
     <div class="main">
-      
-      <div class="board">
-        <div v-for="y in height" :key="y" class="row">
-          <div v-for="x in width" :key="x" class="cell" :class="{ 'ship': isShip(x, y) }" @click="cellClicked(x, y)">
-          </div>
-        </div>
-      </div>
+    
+        <section class="vision">
+            <div class="board">
+                <h2>User Board</h2>
+                <div v-for="y in height" :key="y" class="row">
+                    <div 
+                        v-for="x in width" 
+                        :key="x" 
+                        class="cell" 
+                        :class="{ 'cell-activate': hasShip(userState, x-1, y-1) }"
+                        >
+                    </div>
+                </div>
+            </div>
+            
+            <div class="board">
+                <h2>Opponent Board</h2>
+                <div v-for="y in height" :key="y" class="row">
+                    <div 
+                        v-for="x in width" 
+                        :key="x" 
+                        class="cell" 
+                        :class="{ 'cell-activate': hasShip(opponentState, x-1, y-1) }"
+                        >
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
     </div>
+
+    
   
   
   </template>
   
   <script>
+
   // import { ref } from 'vue';
   // const { navigateToPage } = useCommon();
   
@@ -21,26 +47,27 @@
   // const { encrypt, encryptedText } = useFHE();
   
   export default {
+    props: ["userState"],
     data() {
       return {
         width: 10, 
         height: 10,
-        ships: [
-          { x: 3, y: 4 }, 
-          { x: 7, y: 2 }  
-        ],
+        
+        // userState: Array.from({ length: 11 }, () => Array(11).fill(0)),
+        opponentState: Array.from({ length: 11 }, () => Array(11).fill(0)),
+
         selectedX: null,
         selectedY: null
       };
     },
     methods: {
-      isShip(x, y) {
-        return this.ships.some(ship => ship.x === x && ship.y === y);
+      hasShip(state, x, y) {
+        return state[x][y];
       },
       cellClicked(x, y) {
         // Handle cell click event
         console.log(`Cell (${x}, ${y}) clicked`);
-        
+
         this.selectedX = x;
         this.selectedY = y;
       }
@@ -49,10 +76,26 @@
   </script>
   
   <style scoped>
+
+
+  .main {
+    display: flex;
+  }
+
   .main input {
     width: 300px;
   }
+
+  .vision {
+    display: flex;
+    justify-content: space-between;
+  }
  
+    .board {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
   .cell {
         width: 40px;
         height: 40px;
@@ -67,6 +110,10 @@
         background-color: lightgray;
         box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.5);
     }
+
+    .cell-activate {
+    background-color: aqua;
+  }
 
   .encrypt-line {
     display: flex;

@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-  
+
     <br /><br /><br />
 
     <div>
@@ -46,11 +46,12 @@
   // const { encrypt, encryptedText } = useFHE();
   
   export default {
+    props: ['userState'],
     data() {
       return {
         width: 10, 
         height: 10,
-        state: Array.from({ length: 11 }, () => Array(11).fill(0)),
+        // userState: Array.from({ length: 11 }, () => Array(11).fill(0)),
         placedBoat: [],
         ships: [
           { x: -1, y: -1, direction: false, activate: false, size: 2 },
@@ -68,6 +69,9 @@
 
       validateBoard() {
         console.log("TODO :: send transaction");
+
+        // If all OK - change the view
+        this.$emit('change-view');
       },
       desactivateAllShips() {
         for (let i = 0; i < this.ships.length; i++) {
@@ -84,16 +88,16 @@
         }
       },
       isShip(x, y) {
-        return this.state[x][y] == 1;
+        return this.userState[x][y] == 1;
       },
       isValidPlace(ship, x, y) {
         for (let i = 0; i < ship.size; i++) {
           if (!ship.direction) {
-            if (x+i >= 10 || this.state[x+i][y]) {
+            if (x+i >= 10 || this.userState[x+i][y]) {
               return false;
             }
           } else {
-            if (y+i >= 10 || this.state[x][y+i]) {
+            if (y+i >= 10 || this.userState[x][y+i]) {
               return false;
             }
           }
@@ -113,7 +117,7 @@
         ship.y = y;
 
         for (let w = 0; w < ship.size; w++) {
-          this.state[
+          this.userState[
             !ship.direction ? x + w : x
           ][
             ship.direction ? y + w : y
