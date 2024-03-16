@@ -22,7 +22,8 @@
                         v-for="x in width" 
                         :key="x" 
                         class="cell" 
-                        :class="{ 'cell-activate': hasShip(opponentState, x-1, y-1) }"
+                        :class="{ 'cell-attacked': hasShip(opponentState, x-1, y-1) }"
+                        @click="attack(x-1, y-1)"
                         >
                     </div>
                 </div>
@@ -53,7 +54,6 @@
         width: 10, 
         height: 10,
         
-        // userState: Array.from({ length: 11 }, () => Array(11).fill(0)),
         opponentState: Array.from({ length: 11 }, () => Array(11).fill(0)),
 
         selectedX: null,
@@ -63,6 +63,23 @@
     methods: {
       hasShip(state, x, y) {
         return state[x][y];
+      },
+      attack(x, y) {
+
+        // Already attacked
+        if (this.opponentState[x][y]) { return; }
+
+        // TODO :: Send transaction 
+
+
+        // Update the front state
+        this.opponentState[x][y] = 1;
+      },
+      isGameFinished() {
+        // TODO :: Return if the game is finished or not
+      },
+      userTurn() {
+        // TODO :: Return if it is the user turn or not
       },
       cellClicked(x, y) {
         // Handle cell click event
@@ -113,6 +130,9 @@
 
     .cell-activate {
     background-color: aqua;
+  }
+  .cell-attacked {
+    background-color: red;
   }
 
   .encrypt-line {

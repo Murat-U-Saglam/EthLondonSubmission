@@ -19,7 +19,7 @@ export default {
     },
     data() {
         return {
-            view: "BOATS",
+            view: "BATTLE", // BATTLE
             userState: Array.from({ length: 11 }, () => Array(11).fill(0)),
             opponentState: Array.from({ length: 11 }, () => Array(11).fill(0)),
         };
