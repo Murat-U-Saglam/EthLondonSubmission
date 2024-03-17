@@ -111,7 +111,7 @@ export default {
 
             console.log("Attack on:", x, y)
 
-            this.contract.attack(x, y)
+            this.contract.attack(x, y, { gasLimit: 7920027 })
                 .then()
                 .catch((err) => {
                 console.log("Error on transaction");

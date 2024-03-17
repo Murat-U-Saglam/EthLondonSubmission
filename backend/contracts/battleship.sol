@@ -27,6 +27,7 @@ contract Battleship {
     event Attack(uint8 x, uint8 y, address victim, bool hit);
     event GameEnded(address winner);
     event RequiresPassed(string message);
+    event Log(string func, uint256 gas);
 
     modifier onlyPlayers() {
         require(msg.sender == player1 || msg.sender == player2, "Only players can call this function");
