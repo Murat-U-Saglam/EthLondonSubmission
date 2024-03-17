@@ -14,7 +14,7 @@ contract Battleship {
     bool public player1Ready;
     bool public player2Ready;
 
-    uint8 public constant BOARD_SIZE = 5; 
+    uint8 public constant BOARD_SIZE = 4; 
     uint8 public player1ShipsHit;
     uint8 public player2ShipsHit;
 
@@ -72,10 +72,9 @@ contract Battleship {
           shipCount = FHE.add(shipCount, value);
           packedData = FHE.shr(packedData, boardMask);
         }
-
+        
         // Make sure the user created 6 ships
-        FHE.req(FHE.eq(shipCount, FHE.asEuint8(4)));
-        console.log("BOBMA");
+        // FHE.req(FHE.eq(shipCount, FHE.asEuint8(4)));
 
         if (msg.sender == player1) {
             player1Ready = true;
