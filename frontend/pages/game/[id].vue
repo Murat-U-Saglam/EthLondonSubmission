@@ -60,8 +60,8 @@ export default {
             fhenixClient: null,
             winner: null,
             view: "INIT", // BATTLE // END // BOATS
-            userState: Array.from({ length: 5 }, () => Array(5).fill(0)),
-            opponentState: Array.from({ length: 5 }, () => Array(5).fill(0)),
+            userState: Array.from({ length: 4 }, () => Array(4).fill(0)),
+            opponentState: Array.from({ length: 4 }, () => Array(4).fill(0)),
         };
     },
     created() {
@@ -91,8 +91,11 @@ export default {
 
             const flattenedList = this.userState.flat()
             const flattenedString = flattenedList.join('');
+            console.log("Flattened", flattenedString);
             const intValue = parseInt(flattenedString, 2);
+            console.log("Int value", intValue);
             const uint32Value = new Uint32Array([intValue])[0];
+            console.log("Uint32 value", uint32Value);
 
             const encryptedUserState = await this.fhenixClient.encrypt(uint32Value, EncryptionTypes.uint32);
 
@@ -112,12 +115,15 @@ export default {
             console.log("Attack on:", x, y)
 
             this.contract.attack(x, y, { gasLimit: 7920027 })
-                .then()
-                .catch((err) => {
+                .then(() =>
+                {
+                    console.log("Attacked on:", x, y)
+                }
+                ).catch((err) => {
                 console.log("Error on transaction");
                 console.log(err);
             })
-            console.log("Attacked on:", x, y)
+            
         }
     },
 };

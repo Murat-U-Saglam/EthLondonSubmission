@@ -27,7 +27,7 @@ contract Battleship {
     event Attack(uint8 x, uint8 y, address victim, bool hit);
     event GameEnded(address winner);
     event RequiresPassed(string message);
-    event Log(string func, uint256 gas);
+    event emittarget(uint8 targ);
 
     modifier onlyPlayers() {
         require(msg.sender == player1 || msg.sender == player2, "Only players can call this function");
@@ -58,7 +58,7 @@ contract Battleship {
         // 0 0 1 1
         // 0 1 0 0
         // 0 1 0 0
-
+        emit RequiresPassed("REQUIRES PASSED");
         euint32 packedData = FHE.asEuint32(encryptedValue);
         euint8[BOARD_SIZE][BOARD_SIZE] storage board;
         if(msg.sender == player1 ){
@@ -75,6 +75,7 @@ contract Battleship {
           packedData = FHE.shr(packedData, boardMask);
         }
         
+
         // Make sure the user created 6 ships
         // FHE.req(FHE.eq(shipCount, FHE.asEuint8(4)));
 
@@ -83,13 +84,14 @@ contract Battleship {
         } else {
             player2Ready = true;
         }
-
+        emit RequiresPassed("REQUIRES PASSED");
         if (player2Ready && player1Ready) {
             gameReady = true;
         }
     }
 
     function attack(uint8 _x, uint8 _y) public onlyPlayers {
+        emit RequiresPassed("REQUIRES PASSED");
         require(gameReady, "Game not ready");
         require(!gameEnded, "Game has ended");
         require(msg.sender == currentPlayer, "Not your turn");
@@ -104,6 +106,7 @@ contract Battleship {
         emit RequiresPassed("Board inited");
 
         uint8 target = FHE.decrypt(targetBoard[_x][_y]);
+        emit emittarget(target);
         require(target < 2, "Already attacked this cell");
 
         if (target == 1) {

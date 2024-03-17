@@ -42,13 +42,7 @@
   import { FhenixClient, EncryptionTypes } from 'fhenixjs';
   import { BrowserProvider } from "ethers";
   import battleshipMeta from '../../backend/artifacts/contracts/battleship.sol/Battleship.json';
-  // import { ref } from 'vue';
-  // const { navigateToPage } = useCommon();
-  
-  // const txtNumberToEncrypt = ref(null);
-  // const { address } = useChain();
-  // const { encrypt, encryptedText } = useFHE();
-  
+
 
 
   export default {

@@ -59,8 +59,8 @@
     props: ["userState",'contractAddress'],
     data() {
       return {
-        width: 5, 
-        height: 5,
+        width: 4, 
+        height: 4,
         
         opponentState: Array.from({ length: 4 }, () => Array(4).fill(0)),
 
@@ -88,7 +88,7 @@
 
         // Already attacked
         if (this.opponentState[x][y]) { return; }
-
+        console.log("Attacking", x, y)
         this.$emit('attack-requets', x, y);
 
         // Update the front state

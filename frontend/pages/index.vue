@@ -56,7 +56,6 @@ import { BrowserProvider } from "ethers";
 // import { BrowserProvider } from "ethers";
 
 import battleshipMeta from '../../backend/artifacts/contracts/battleship.sol/Battleship.json';
-
 import { ContractFactory } from 'ethers';
 
 export default {
@@ -64,7 +63,7 @@ export default {
     return {
       contractAddress: null,
       user_1: "0x2B8D536768163cBCd2cC5D91D4b03B913244A784",
-      user_2: "0x7a47A0B8Fb2F1e56Db819e186B1A38e95B3c7d3B",
+      user_2: "0xb695f60c1B049696dF4C19faa348C22db679Ff3c",
     };
   },
   methods: {
@@ -87,7 +86,7 @@ export default {
       // If your contract requires constructor args, you can specify them here
         let contract = await factory.deploy(
           this.user_1, // "0x2B8D536768163cBCd2cC5D91D4b03B913244A784", 
-          this.user_2  // "0x7a47A0B8Fb2F1e56Db819e186B1A38e95B3c7d3B"
+          this.user_2  // "0xb695f60c1B049696dF4C19faa348C22db679Ff3c"
         );
 
         console.log("Contract:");
