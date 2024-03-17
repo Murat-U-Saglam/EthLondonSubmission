@@ -97,6 +97,8 @@ export default {
 
         this.contractAddress = contract.target;
 
+        this.$router.push('/game/' + this.contractAddress);
+
     }
   }
 };

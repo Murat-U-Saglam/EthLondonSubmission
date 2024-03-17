@@ -37,13 +37,13 @@ import { ethers } from "ethers";
 import { FhenixClient, EncryptionTypes } from 'fhenixjs';
 import { BrowserProvider } from "ethers";
 
-import Header from '../components/Header.vue';
+import Header from '../../components/Header.vue';
 
-import Boats from './boats.vue';
-import Battleship from './battleship.vue';
-import EndGame from './end_game.vue';
+import Boats from '../boats.vue';
+import Battleship from '../battleship.vue';
+import EndGame from '../end_game.vue';
 
-import abi from '../../backend/contracts/battleship_abi.json';
+import abi from '../../../backend/contracts/battleship_abi.json';
 
 export default {
     components: {
@@ -62,6 +62,10 @@ export default {
             userState: Array.from({ length: 5 }, () => Array(5).fill(0)),
             opponentState: Array.from({ length: 5 }, () => Array(5).fill(0)),
         };
+    },
+    created() {
+        // Assign the route param to itemId when the component is created
+        this.contractAddress = this.$route.params.id;
     },
     methods: {
         async initialize() {
