@@ -21,11 +21,13 @@
             v-if="view === 'BOATS'" 
             @change-view="validateUserBoard" 
             :userState="userState"
+            :contractAddress="contractAddress"
         />
         <Battleship 
             v-else-if="view === 'BATTLE'" 
             :userState="userState" 
-            @attack-requets="attackRequest"    
+            @attack-requets="attackRequest"
+            :contractAddress="contractAddress"
         />
         <EndGame v-else-if="view === 'END'" :winner="winner" />
 
@@ -42,8 +44,7 @@ import Header from '../../components/Header.vue';
 import Boats from '../boats.vue';
 import Battleship from '../battleship.vue';
 import EndGame from '../end_game.vue';
-
-import abi from '../../../backend/contracts/battleship_abi.json';
+import battleShip from '../../../backend/artifacts/contracts/battleship.sol/Battleship.json';
 
 export default {
     components: {
@@ -54,7 +55,7 @@ export default {
     },
     data() {
         return {
-            contractAddress: null,
+            contractAddress: this.$route.params.id,
             contract: null,
             fhenixClient: null,
             winner: null,
@@ -78,7 +79,7 @@ export default {
 
             // Get the signer & get the contract from the address
             const signer = await provider.getSigner();
-            this.contract = new ethers.Contract(this.contractAddress, abi, signer);
+            this.contract = new ethers.Contract(this.contractAddress, battleShip.abi, signer);
             
         },
         changeViewToBattle() {

@@ -38,6 +38,10 @@
   </template>
   
   <script>
+  import { ethers } from "ethers";
+  import { FhenixClient, EncryptionTypes } from 'fhenixjs';
+  import { BrowserProvider } from "ethers";
+  import battleshipMeta from '../../backend/artifacts/contracts/battleship.sol/Battleship.json';
   // import { ref } from 'vue';
   // const { navigateToPage } = useCommon();
   
@@ -45,9 +49,11 @@
   // const { address } = useChain();
   // const { encrypt, encryptedText } = useFHE();
   
+
+
   export default {
     props: [
-      'userState'
+      'userState','contractAddress'
     ],
     data() {
       return {
@@ -67,6 +73,18 @@
         selectedY: null,
         selectedShipIndex: null,
       };
+    },async created() {
+      console.log("Created")
+      const provider = new BrowserProvider(window.ethereum);
+      let fhenixClient = new FhenixClient({provider})
+      // Get the signer & get the contract from the address
+      const signer = await provider.getSigner();
+      let contract = new ethers.Contract(this.contractAddress, battleshipMeta.abi, signer);
+      let boardSize = await contract.BOARD_SIZE()
+      console.log("Board size: ", boardSize)
+      console.log(this.contractAddress)
+      this.width = Number(boardSize)
+      this.height = Number(boardSize)
     },
     methods: {
 
@@ -136,6 +154,7 @@
     }
   };
   </script>
+
   
   <style scoped>
   .main input {

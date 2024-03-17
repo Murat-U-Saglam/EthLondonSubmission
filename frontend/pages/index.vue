@@ -55,7 +55,7 @@ import { BrowserProvider } from "ethers";
 // import { FhenixClient, EncryptionTypes } from 'fhenixjs';
 // import { BrowserProvider } from "ethers";
 
-import rawContract from "./ABI.json";
+import rawContract from "../backend/artifacts/contracts/battleship.sol/Battleship.json";
 
 import { ContractFactory } from 'ethers';
 
