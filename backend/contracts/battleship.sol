@@ -26,6 +26,7 @@ contract Battleship {
 
     event Attack(uint8 x, uint8 y, address victim, bool hit);
     event GameEnded(address winner);
+    event RequiresPassed(string message);
 
     modifier onlyPlayers() {
         require(msg.sender == player1 || msg.sender == player2, "Only players can call this function");
@@ -91,6 +92,7 @@ contract Battleship {
         require(gameReady, "Game not ready");
         require(!gameEnded, "Game has ended");
         require(msg.sender == currentPlayer, "Not your turn");
+        emit RequiresPassed("REQUIRES PASSED");
 
         euint8[BOARD_SIZE][BOARD_SIZE] storage targetBoard;
         if (msg.sender == player1) {
@@ -98,6 +100,7 @@ contract Battleship {
         } else {
             targetBoard = player1Board;
         }
+        emit RequiresPassed("Board inited");
 
         uint8 target = FHE.decrypt(targetBoard[_x][_y]);
         require(target < 2, "Already attacked this cell");
@@ -122,12 +125,14 @@ contract Battleship {
                 emit Attack(_x, _y, player1, false);
             }
         }
+        emit RequiresPassed("Conditional is complete");
         targetBoard[_x][_y] = FHE.asEuint8(2);
-
+        emit RequiresPassed("Board updated");
         if (currentPlayer == player1) {
             currentPlayer = player2;
         } else {
             currentPlayer = player1;
         }
+        emit RequiresPassed("Player updated");
     }
 }
