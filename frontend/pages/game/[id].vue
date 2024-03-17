@@ -117,6 +117,7 @@ export default {
                 console.log("Error on transaction");
                 console.log(err);
             })
+            console.log("Attacked on:", x, y)
         }
     },
 };

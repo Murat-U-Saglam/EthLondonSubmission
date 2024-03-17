@@ -55,7 +55,7 @@ import { BrowserProvider } from "ethers";
 // import { FhenixClient, EncryptionTypes } from 'fhenixjs';
 // import { BrowserProvider } from "ethers";
 
-import rawContract from "../backend/artifacts/contracts/battleship.sol/Battleship.json";
+import battleshipMeta from '../../backend/artifacts/contracts/battleship.sol/Battleship.json';
 
 import { ContractFactory } from 'ethers';
 
@@ -82,7 +82,7 @@ export default {
       const provider = new BrowserProvider(window.ethereum);
       let signer = await provider.getSigner();
 
-      const factory = new ContractFactory(rawContract.abi, rawContract.bytecode, signer);
+      const factory = new ContractFactory(battleshipMeta.abi, battleshipMeta.bytecode, signer);
 
       // If your contract requires constructor args, you can specify them here
         let contract = await factory.deploy(
