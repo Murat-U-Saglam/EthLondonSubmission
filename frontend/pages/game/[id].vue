@@ -91,8 +91,9 @@ export default {
 
             const flattenedList = this.userState.flat()
             const flattenedString = flattenedList.join('');
-            console.log("Flattened", flattenedString);
-            const intValue = parseInt(flattenedString, 2);
+            const flippedString = flattenedString.split('').reverse().join('');
+            console.log("Flattened", flippedString);
+            const intValue = parseInt(flippedString, 2);
             console.log("Int value", intValue);
             const uint32Value = new Uint32Array([intValue])[0];
             console.log("Uint32 value", uint32Value);

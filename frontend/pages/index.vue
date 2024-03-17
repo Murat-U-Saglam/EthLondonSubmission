@@ -37,23 +37,10 @@
 
 <script>
 
-// import { ethers } from "ethers";
-// import { FhenixClient, EncryptionTypes } from 'fhenixjs';
 
-// import hre from "hardhat";
 
 import { BrowserProvider } from "ethers";
-// const { fhenixjs, ethers } = hre;
-// const { deploy } = hre.deployments;
 
-// // Get the provider & define the clent
-// const provider = new BrowserProvider(window.ethereum);
-// fhenixClient = new FhenixClient({provider});
-
-
-// import { ethers } from "ethers";
-// import { FhenixClient, EncryptionTypes } from 'fhenixjs';
-// import { BrowserProvider } from "ethers";
 
 import battleshipMeta from '../../backend/artifacts/contracts/battleship.sol/Battleship.json';
 import { ContractFactory } from 'ethers';
