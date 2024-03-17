@@ -69,7 +69,7 @@
       };
     },async created() {
       console.log("Created")
-      const provider = new BrowserProvider(window.ethereum);
+      this.provider = new BrowserProvider(window.ethereum);
       let fhenixClient = new FhenixClient({provider})
       // Get the signer & get the contract from the address
       const signer = await provider.getSigner();
@@ -95,7 +95,11 @@
         this.opponentState[x][y] = 1;
       },
       isGameFinished() {
-        // TODO :: Return if the game is finished or not
+        this.provider.on(GameEnded, (winner) => {
+          console.log("Game ended", winner)
+          alert(`Game ended. Winner: ${winner}`);
+          this.$emit('game-ended', winner);
+        });
       },
       userTurn() {
         // TODO :: Return if it is the user turn or not
