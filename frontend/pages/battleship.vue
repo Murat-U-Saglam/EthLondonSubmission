@@ -107,7 +107,6 @@
       cellClicked(x, y) {
         // Handle cell click event
         console.log(`Cell (${x}, ${y}) clicked`);
-
         this.selectedX = x;
         this.selectedY = y;
       }
